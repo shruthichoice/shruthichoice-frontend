@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SareesRouteImport } from './routes/sarees'
 import { Route as SaleRouteImport } from './routes/sale'
@@ -23,11 +22,6 @@ import { Route as R3PieceSetsRouteImport } from './routes/3-piece-sets'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 
-const WishlistRoute = WishlistRouteImport.update({
-  id: '/wishlist',
-  path: '/wishlist',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -101,7 +95,6 @@ export interface FileRoutesByFullPath {
   '/sale': typeof SaleRoute
   '/sarees': typeof SareesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/wishlist': typeof WishlistRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesByTo {
@@ -116,7 +109,6 @@ export interface FileRoutesByTo {
   '/sale': typeof SaleRoute
   '/sarees': typeof SareesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/wishlist': typeof WishlistRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesById {
@@ -132,7 +124,6 @@ export interface FileRoutesById {
   '/sale': typeof SaleRoute
   '/sarees': typeof SareesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/wishlist': typeof WishlistRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRouteTypes {
@@ -149,7 +140,6 @@ export interface FileRouteTypes {
     | '/sale'
     | '/sarees'
     | '/sitemap.xml'
-    | '/wishlist'
     | '/product/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -164,7 +154,6 @@ export interface FileRouteTypes {
     | '/sale'
     | '/sarees'
     | '/sitemap.xml'
-    | '/wishlist'
     | '/product/$slug'
   id:
     | '__root__'
@@ -179,7 +168,6 @@ export interface FileRouteTypes {
     | '/sale'
     | '/sarees'
     | '/sitemap.xml'
-    | '/wishlist'
     | '/product/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -195,19 +183,11 @@ export interface RootRouteChildren {
   SaleRoute: typeof SaleRoute
   SareesRoute: typeof SareesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  WishlistRoute: typeof WishlistRoute
   ProductSlugRoute: typeof ProductSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/wishlist': {
-      id: '/wishlist'
-      path: '/wishlist'
-      fullPath: '/wishlist'
-      preLoaderRoute: typeof WishlistRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -307,9 +287,18 @@ const rootRouteChildren: RootRouteChildren = {
   SaleRoute: SaleRoute,
   SareesRoute: SareesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  WishlistRoute: WishlistRoute,
   ProductSlugRoute: ProductSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
