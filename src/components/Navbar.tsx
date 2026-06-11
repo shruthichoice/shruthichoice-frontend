@@ -122,9 +122,6 @@ export function Navbar() {
         </button>
         <Logo />
         <div className="flex items-center gap-4">
-          <Link to="/wishlist" aria-label="Wishlist">
-            <Heart className="h-5 w-5" strokeWidth={1.5} />
-          </Link>
           <Link to="/cart" className="relative" aria-label="Cart">
             <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
             {cartCount > 0 && (
