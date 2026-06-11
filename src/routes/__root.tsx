@@ -131,8 +131,29 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <StoreProvider>
+        <AnnouncementBar />
+        <Navbar />
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <main className="min-h-[60vh]">
+          <Outlet />
+        </main>
+        <Footer />
+        <FloatingButtons />
+        <AuthModal />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {
+              borderRadius: "0",
+              background: "#000",
+              color: "#fff",
+              border: "none",
+              fontSize: "13px",
+            },
+          }}
+        />
+      </StoreProvider>
     </QueryClientProvider>
   );
 }
