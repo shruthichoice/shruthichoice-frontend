@@ -96,18 +96,7 @@ function AccountPage() {
             </div>
           )}
 
-          {tab === "wishlist" && (
-            <div>
-              <h2 className="section-title text-sm">Wishlist</h2>
-              {wishItems.length === 0 ? (
-                <p className="mt-5 text-sm text-muted-foreground">No saved items yet.</p>
-              ) : (
-                <div className="mt-5 grid grid-cols-2 gap-x-[2px] gap-y-6 md:grid-cols-3">
-                  {wishItems.map((p) => <ProductCard key={p.slug} product={p} />)}
-                </div>
-              )}
-            </div>
-          )}
+
 
           {tab === "addresses" && (
             <div>
