@@ -7,7 +7,7 @@ export const Route = createFileRoute("/account")({
   head: () => ({
     meta: [
       { title: "My Account — Shruthi's Choice" },
-      { name: "description", content: "Manage your orders, wishlist and addresses." },
+      { name: "description", content: "Manage your orders and saved addresses." },
       { name: "robots", content: "noindex" },
     ],
   }),
