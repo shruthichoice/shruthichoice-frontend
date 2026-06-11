@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useStore } from "@/context/store";
-import { getProductBySlug } from "@/lib/products";
-import { ProductCard } from "@/components/ProductCard";
 import { formatPrice } from "@/lib/format";
 
 export const Route = createFileRoute("/account")({
@@ -16,11 +14,10 @@ export const Route = createFileRoute("/account")({
   component: AccountPage,
 });
 
-type Tab = "orders" | "wishlist" | "addresses" | "profile";
+type Tab = "orders" | "addresses" | "profile";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "orders", label: "My Orders" },
-  { key: "wishlist", label: "Wishlist" },
   { key: "addresses", label: "Saved Addresses" },
   { key: "profile", label: "Profile Details" },
 ];
