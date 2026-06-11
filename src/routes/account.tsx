@@ -35,14 +35,14 @@ function statusClass(status: string) {
 }
 
 function AccountPage() {
-  const { user, logout, wishlist, setAuthOpen } = useStore();
+  const { user, logout, setAuthOpen } = useStore();
   const [tab, setTab] = useState<Tab>("orders");
 
   if (!user) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center text-center">
         <h1 className="font-display text-xl uppercase tracking-wider">Please sign in</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Access your orders, wishlist and addresses.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Access your orders and addresses.</p>
         <button onClick={() => setAuthOpen(true)} className="mt-6 bg-foreground px-10 py-3.5 text-[12px] font-medium uppercase tracking-[0.15em] text-background">
           Sign In
         </button>
@@ -50,9 +50,6 @@ function AccountPage() {
     );
   }
 
-  const wishItems = wishlist
-    .map((s) => getProductBySlug(s))
-    .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
     <div className="mx-auto max-w-[1280px] px-4 py-8 md:px-6">
