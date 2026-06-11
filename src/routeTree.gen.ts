@@ -9,8 +9,38 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SareesRouteImport } from './routes/sarees'
+import { Route as SaleRouteImport } from './routes/sale'
+import { Route as NewArrivalsRouteImport } from './routes/new-arrivals'
+import { Route as KurthasRouteImport } from './routes/kurthas'
+import { Route as R3PieceSetsRouteImport } from './routes/3-piece-sets'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SareesRoute = SareesRouteImport.update({
+  id: '/sarees',
+  path: '/sarees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SaleRoute = SaleRouteImport.update({
+  id: '/sale',
+  path: '/sale',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewArrivalsRoute = NewArrivalsRouteImport.update({
+  id: '/new-arrivals',
+  path: '/new-arrivals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KurthasRoute = KurthasRouteImport.update({
+  id: '/kurthas',
+  path: '/kurthas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const R3PieceSetsRoute = R3PieceSetsRouteImport.update({
+  id: '/3-piece-sets',
+  path: '/3-piece-sets',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +49,96 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/3-piece-sets': typeof R3PieceSetsRoute
+  '/kurthas': typeof KurthasRoute
+  '/new-arrivals': typeof NewArrivalsRoute
+  '/sale': typeof SaleRoute
+  '/sarees': typeof SareesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/3-piece-sets': typeof R3PieceSetsRoute
+  '/kurthas': typeof KurthasRoute
+  '/new-arrivals': typeof NewArrivalsRoute
+  '/sale': typeof SaleRoute
+  '/sarees': typeof SareesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/3-piece-sets': typeof R3PieceSetsRoute
+  '/kurthas': typeof KurthasRoute
+  '/new-arrivals': typeof NewArrivalsRoute
+  '/sale': typeof SaleRoute
+  '/sarees': typeof SareesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/3-piece-sets'
+    | '/kurthas'
+    | '/new-arrivals'
+    | '/sale'
+    | '/sarees'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/3-piece-sets' | '/kurthas' | '/new-arrivals' | '/sale' | '/sarees'
+  id:
+    | '__root__'
+    | '/'
+    | '/3-piece-sets'
+    | '/kurthas'
+    | '/new-arrivals'
+    | '/sale'
+    | '/sarees'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  R3PieceSetsRoute: typeof R3PieceSetsRoute
+  KurthasRoute: typeof KurthasRoute
+  NewArrivalsRoute: typeof NewArrivalsRoute
+  SaleRoute: typeof SaleRoute
+  SareesRoute: typeof SareesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sarees': {
+      id: '/sarees'
+      path: '/sarees'
+      fullPath: '/sarees'
+      preLoaderRoute: typeof SareesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sale': {
+      id: '/sale'
+      path: '/sale'
+      fullPath: '/sale'
+      preLoaderRoute: typeof SaleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new-arrivals': {
+      id: '/new-arrivals'
+      path: '/new-arrivals'
+      fullPath: '/new-arrivals'
+      preLoaderRoute: typeof NewArrivalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kurthas': {
+      id: '/kurthas'
+      path: '/kurthas'
+      fullPath: '/kurthas'
+      preLoaderRoute: typeof KurthasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/3-piece-sets': {
+      id: '/3-piece-sets'
+      path: '/3-piece-sets'
+      fullPath: '/3-piece-sets'
+      preLoaderRoute: typeof R3PieceSetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,7 +151,22 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  R3PieceSetsRoute: R3PieceSetsRoute,
+  KurthasRoute: KurthasRoute,
+  NewArrivalsRoute: NewArrivalsRoute,
+  SaleRoute: SaleRoute,
+  SareesRoute: SareesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
