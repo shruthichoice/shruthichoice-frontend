@@ -3,15 +3,20 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { SectionTitle } from "@/components/SectionTitle";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductRow } from "@/components/ProductRow";
+import { BrandStory } from "@/components/BrandStory";
+import { BrandTimeline } from "@/components/BrandTimeline";
+import { WhyChoose } from "@/components/WhyChoose";
+import { Testimonials } from "@/components/Testimonials";
+import { EditorialQuote } from "@/components/EditorialQuote";
 import {
   categories,
   newArrivals,
   bestSellers,
   products as allProducts,
   getProductBySlug,
+  type CategorySlug,
 } from "@/lib/products";
 import { useStore } from "@/context/store";
-import editorial from "@/assets/editorial.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,6 +37,9 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+const catTo = (slug: CategorySlug) =>
+  slug === "sarees" ? "/sarees" : slug === "kurthas" ? "/kurthas" : "/3-piece-sets";
+
 function Home() {
   const { recentlyViewed } = useStore();
   const recent = recentlyViewed
@@ -42,12 +50,33 @@ function Home() {
     <div>
       <HeroSlider />
 
-      {/* Categories */}
-      <section className="mx-auto max-w-[1600px] px-4 py-16 md:px-6">
+      {/* Categories — circular on mobile, square cards on desktop */}
+      <section className="mx-auto max-w-[1600px] px-4 py-12 md:px-6 md:py-16">
         <SectionTitle title="Shop by Category" withRules={false} />
-        <div className="mt-8 grid grid-cols-1 gap-[2px] sm:grid-cols-3">
+
+        {/* Mobile: circular thumbnails, horizontal scroll */}
+        <div className="no-scrollbar mt-8 flex justify-start gap-7 overflow-x-auto px-1 sm:hidden">
           {categories.map((c) => (
-            <Link key={c.slug} to={c.slug === "sarees" ? "/sarees" : c.slug === "kurthas" ? "/kurthas" : "/3-piece-sets"} className="group block">
+            <Link key={c.slug} to={catTo(c.slug)} className="group flex shrink-0 flex-col items-center">
+              <div className="h-[100px] w-[100px] overflow-hidden rounded-full border border-border">
+                <img
+                  src={c.image}
+                  alt={c.label}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+              <p className="mt-3 text-center text-[11px] font-medium uppercase tracking-[0.12em]">
+                {c.label}
+              </p>
+            </Link>
+          ))}
+        </div>
+
+        {/* Desktop: square cards */}
+        <div className="mt-8 hidden grid-cols-3 gap-[2px] sm:grid">
+          {categories.map((c) => (
+            <Link key={c.slug} to={catTo(c.slug)} className="group block">
               <div className="relative overflow-hidden border-b-2 border-transparent transition-colors duration-300 group-hover:border-brand">
                 <img
                   src={c.image}
@@ -64,6 +93,8 @@ function Home() {
         </div>
       </section>
 
+      <EditorialQuote quote="Rooted in Tradition. Designed for Today." />
+
       {/* New Arrivals */}
       <section className="mx-auto max-w-[1600px] px-4 py-8 md:px-6">
         <SectionTitle title="New Arrivals" />
@@ -77,36 +108,9 @@ function Home() {
         </div>
       </section>
 
-      {/* Editorial brand story */}
-      <section className="mt-12 bg-foreground text-background">
-        <div className="mx-auto grid max-w-[1600px] grid-cols-1 items-stretch md:grid-cols-2">
-          <div className="flex flex-col justify-center px-8 py-16 md:px-16">
-            <p className="font-serif text-3xl font-semibold leading-tight md:text-5xl">
-              “Every piece tells a story”
-            </p>
-            <p className="mt-6 max-w-md text-sm leading-relaxed text-background/75 md:text-base">
-              Shruthi's Choice is a celebration of womanhood and heritage. Timeless
-              craftsmanship, curated for the modern woman.
-            </p>
-            <Link
-              to="/about"
-              className="mt-8 inline-flex w-fit border border-background px-8 py-3.5 text-[12px] font-medium uppercase tracking-[0.15em] transition-colors hover:bg-background hover:text-foreground"
-            >
-              Our Story
-            </Link>
-          </div>
-          <div className="min-h-[360px] overflow-hidden">
-            <img
-              src={editorial}
-              alt="Shruthi's Choice editorial"
-              width={960}
-              height={1216}
-              loading="lazy"
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </div>
-      </section>
+      <BrandStory />
+
+      <EditorialQuote quote="Every Piece Carries a Story." light />
 
       {/* Best Sellers */}
       <section className="mx-auto max-w-[1600px] px-4 py-16 md:px-6">
@@ -123,9 +127,17 @@ function Home() {
         </div>
       </section>
 
+      <BrandTimeline />
+
+      <WhyChoose />
+
+      <EditorialQuote quote="Elegance Never Goes Out of Style." />
+
+      <Testimonials />
+
       {/* Recently viewed */}
       {recent.length > 0 && (
-        <section className="mx-auto max-w-[1600px] px-4 py-8 md:px-6">
+        <section className="mx-auto max-w-[1600px] px-4 py-16 md:px-6">
           <SectionTitle title="Continue Shopping" />
           <div className="mt-8">
             <ProductRow products={recent} />
