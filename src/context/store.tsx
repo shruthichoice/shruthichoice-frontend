@@ -55,7 +55,6 @@ function readLS<T>(key: string, fallback: T): T {
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [wishlist, setWishlist] = useState<string[]>([]);
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [authOpen, setAuthOpen] = useState(false);
@@ -63,7 +62,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setCart(readLS("sc_cart", []));
-    setWishlist(readLS("sc_wishlist", []));
     setRecentlyViewed(readLS("sc_recent", []));
     setUser(readLS("sc_user", null));
     setHydrated(true);
@@ -72,9 +70,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (hydrated) localStorage.setItem("sc_cart", JSON.stringify(cart));
   }, [cart, hydrated]);
-  useEffect(() => {
-    if (hydrated) localStorage.setItem("sc_wishlist", JSON.stringify(wishlist));
-  }, [wishlist, hydrated]);
   useEffect(() => {
     if (hydrated) localStorage.setItem("sc_recent", JSON.stringify(recentlyViewed));
   }, [recentlyViewed, hydrated]);
