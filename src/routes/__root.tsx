@@ -77,16 +77,29 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Shruthi's Choice — Traditional Indian Women's Wear" },
+      {
+        name: "description",
+        content:
+          "Shruthi's Choice — fine apparel and curated pieces. Handpicked sarees, kurthas and 3-piece sets for the modern woman.",
+      },
+      { name: "author", content: "Shruthi's Choice" },
+      { property: "og:title", content: "Shruthi's Choice — Fine Apparel and Curated Pieces" },
+      {
+        property: "og:description",
+        content: "Handpicked traditional wear for modern women. Sarees, Kurthas & 3-Piece Sets.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:site_name", content: "Shruthi's Choice" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=DM+Sans:wght@400;500;600&family=Jost:wght@400;500;600&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
