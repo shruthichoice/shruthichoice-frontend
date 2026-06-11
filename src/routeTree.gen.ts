@@ -13,6 +13,7 @@ import { Route as SareesRouteImport } from './routes/sarees'
 import { Route as SaleRouteImport } from './routes/sale'
 import { Route as NewArrivalsRouteImport } from './routes/new-arrivals'
 import { Route as KurthasRouteImport } from './routes/kurthas'
+import { Route as CartRouteImport } from './routes/cart'
 import { Route as R3PieceSetsRouteImport } from './routes/3-piece-sets'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
@@ -37,6 +38,11 @@ const KurthasRoute = KurthasRouteImport.update({
   path: '/kurthas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const R3PieceSetsRoute = R3PieceSetsRouteImport.update({
   id: '/3-piece-sets',
   path: '/3-piece-sets',
@@ -56,6 +62,7 @@ const ProductSlugRoute = ProductSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/3-piece-sets': typeof R3PieceSetsRoute
+  '/cart': typeof CartRoute
   '/kurthas': typeof KurthasRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/sale': typeof SaleRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/3-piece-sets': typeof R3PieceSetsRoute
+  '/cart': typeof CartRoute
   '/kurthas': typeof KurthasRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/sale': typeof SaleRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/3-piece-sets': typeof R3PieceSetsRoute
+  '/cart': typeof CartRoute
   '/kurthas': typeof KurthasRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/sale': typeof SaleRoute
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/3-piece-sets'
+    | '/cart'
     | '/kurthas'
     | '/new-arrivals'
     | '/sale'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/3-piece-sets'
+    | '/cart'
     | '/kurthas'
     | '/new-arrivals'
     | '/sale'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/3-piece-sets'
+    | '/cart'
     | '/kurthas'
     | '/new-arrivals'
     | '/sale'
@@ -114,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   R3PieceSetsRoute: typeof R3PieceSetsRoute
+  CartRoute: typeof CartRoute
   KurthasRoute: typeof KurthasRoute
   NewArrivalsRoute: typeof NewArrivalsRoute
   SaleRoute: typeof SaleRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KurthasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/3-piece-sets': {
       id: '/3-piece-sets'
       path: '/3-piece-sets'
@@ -178,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   R3PieceSetsRoute: R3PieceSetsRoute,
+  CartRoute: CartRoute,
   KurthasRoute: KurthasRoute,
   NewArrivalsRoute: NewArrivalsRoute,
   SaleRoute: SaleRoute,
