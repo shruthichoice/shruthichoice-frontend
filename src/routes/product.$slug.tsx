@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
-import { Heart, Minus, Plus, ChevronDown, Truck } from "lucide-react";
+import { Minus, Plus, ChevronDown, Truck } from "lucide-react";
 import { useStore } from "@/context/store";
 import { formatPrice, discountPercent } from "@/lib/format";
 import {
@@ -50,7 +50,7 @@ function ProductDetail() {
 }
 
 function ProductView({ product }: { product: Product }) {
-  const { addToCart, toggleWishlist, isWishlisted, addRecentlyViewed } = useStore();
+  const { addToCart, addRecentlyViewed } = useStore();
   const navigate = useNavigate();
 
   const [activeImg, setActiveImg] = useState(0);
