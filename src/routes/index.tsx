@@ -8,9 +8,9 @@ import {
   newArrivals,
   bestSellers,
   products as allProducts,
+  getProductBySlug,
 } from "@/lib/products";
 import { useStore } from "@/context/store";
-import { getProductBySlug } from "@/lib/products";
 import editorial from "@/assets/editorial.jpg";
 
 export const Route = createFileRoute("/")({
