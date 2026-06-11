@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Heart, Search, ShoppingBag, Menu, X, User } from "lucide-react";
+import { Search, ShoppingBag, Menu, X, User } from "lucide-react";
 import { useStore } from "@/context/store";
 
 export function Logo({ light = false }: { light?: boolean }) {
