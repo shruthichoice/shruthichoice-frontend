@@ -109,19 +109,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const clearCart = () => setCart([]);
 
-  const toggleWishlist = (slug: string) => {
-    setWishlist((prev) => {
-      if (prev.includes(slug)) {
-        toast("Removed from wishlist");
-        return prev.filter((s) => s !== slug);
-      }
-      toast.success("Added to wishlist");
-      return [...prev, slug];
-    });
-  };
-
-  const isWishlisted = (slug: string) => wishlist.includes(slug);
-
   const addRecentlyViewed = (slug: string) => {
     setRecentlyViewed((prev) => [slug, ...prev.filter((s) => s !== slug)].slice(0, 8));
   };
