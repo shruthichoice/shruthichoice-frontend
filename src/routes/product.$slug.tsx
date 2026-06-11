@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
-import { Heart, Minus, Plus, ChevronDown, Truck } from "lucide-react";
+import { Minus, Plus, ChevronDown, Truck } from "lucide-react";
 import { useStore } from "@/context/store";
 import { formatPrice, discountPercent } from "@/lib/format";
 import {
@@ -50,7 +50,7 @@ function ProductDetail() {
 }
 
 function ProductView({ product }: { product: Product }) {
-  const { addToCart, toggleWishlist, isWishlisted, addRecentlyViewed } = useStore();
+  const { addToCart, addRecentlyViewed } = useStore();
   const navigate = useNavigate();
 
   const [activeImg, setActiveImg] = useState(0);
@@ -257,26 +257,22 @@ function ProductView({ product }: { product: Product }) {
               <>
                 <button
                   onClick={handleAdd}
-                  className="w-full bg-foreground py-3.5 text-[13px] font-medium uppercase tracking-[0.15em] text-background transition-opacity hover:opacity-90"
+                  disabled={!size}
+                  className="w-full bg-foreground py-3.5 text-[13px] font-medium uppercase tracking-[0.15em] text-background transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:opacity-40"
                 >
-                  Add to Bag
+                  {size ? "Add to Bag" : "Select a Size"}
                 </button>
                 <button
                   onClick={handleBuyNow}
-                  className="w-full bg-brand py-3.5 text-[13px] font-medium uppercase tracking-[0.15em] text-brand-foreground transition-opacity hover:opacity-90"
+                  disabled={!size}
+                  className="w-full bg-brand py-3.5 text-[13px] font-medium uppercase tracking-[0.15em] text-brand-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:opacity-40"
                 >
                   Buy Now
                 </button>
               </>
             )}
-            <button
-              onClick={() => toggleWishlist(product.slug)}
-              className="flex w-full items-center justify-center gap-2 py-2 text-[12px] uppercase tracking-wider"
-            >
-              <Heart className="h-4 w-4" strokeWidth={1.5} fill={isWishlisted(product.slug) ? "currentColor" : "none"} />
-              Wishlist
-            </button>
           </div>
+
 
           <div className="my-5 h-px bg-border" />
 

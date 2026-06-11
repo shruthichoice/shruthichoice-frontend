@@ -27,7 +27,6 @@ export interface User {
 
 interface StoreContextValue {
   cart: CartItem[];
-  wishlist: string[];
   recentlyViewed: string[];
   user: User | null;
   authOpen: boolean;
@@ -37,8 +36,6 @@ interface StoreContextValue {
   removeFromCart: (slug: string, size: string, color: string) => void;
   updateQty: (slug: string, size: string, color: string, qty: number) => void;
   clearCart: () => void;
-  toggleWishlist: (slug: string) => void;
-  isWishlisted: (slug: string) => boolean;
   addRecentlyViewed: (slug: string) => void;
   login: (user: User) => void;
   logout: () => void;
@@ -58,7 +55,6 @@ function readLS<T>(key: string, fallback: T): T {
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [wishlist, setWishlist] = useState<string[]>([]);
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [authOpen, setAuthOpen] = useState(false);
@@ -66,7 +62,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setCart(readLS("sc_cart", []));
-    setWishlist(readLS("sc_wishlist", []));
     setRecentlyViewed(readLS("sc_recent", []));
     setUser(readLS("sc_user", null));
     setHydrated(true);
@@ -75,9 +70,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (hydrated) localStorage.setItem("sc_cart", JSON.stringify(cart));
   }, [cart, hydrated]);
-  useEffect(() => {
-    if (hydrated) localStorage.setItem("sc_wishlist", JSON.stringify(wishlist));
-  }, [wishlist, hydrated]);
   useEffect(() => {
     if (hydrated) localStorage.setItem("sc_recent", JSON.stringify(recentlyViewed));
   }, [recentlyViewed, hydrated]);
@@ -117,19 +109,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const clearCart = () => setCart([]);
 
-  const toggleWishlist = (slug: string) => {
-    setWishlist((prev) => {
-      if (prev.includes(slug)) {
-        toast("Removed from wishlist");
-        return prev.filter((s) => s !== slug);
-      }
-      toast.success("Added to wishlist");
-      return [...prev, slug];
-    });
-  };
-
-  const isWishlisted = (slug: string) => wishlist.includes(slug);
-
   const addRecentlyViewed = (slug: string) => {
     setRecentlyViewed((prev) => [slug, ...prev.filter((s) => s !== slug)].slice(0, 8));
   };
@@ -151,7 +130,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     <StoreContext.Provider
       value={{
         cart,
-        wishlist,
         recentlyViewed,
         user,
         authOpen,
@@ -161,8 +139,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         removeFromCart,
         updateQty,
         clearCart,
-        toggleWishlist,
-        isWishlisted,
         addRecentlyViewed,
         login,
         logout,

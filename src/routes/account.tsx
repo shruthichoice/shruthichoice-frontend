@@ -1,26 +1,23 @@
 import { useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useStore } from "@/context/store";
-import { getProductBySlug } from "@/lib/products";
-import { ProductCard } from "@/components/ProductCard";
 import { formatPrice } from "@/lib/format";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
     meta: [
       { title: "My Account — Shruthi's Choice" },
-      { name: "description", content: "Manage your orders, wishlist and addresses." },
+      { name: "description", content: "Manage your orders and saved addresses." },
       { name: "robots", content: "noindex" },
     ],
   }),
   component: AccountPage,
 });
 
-type Tab = "orders" | "wishlist" | "addresses" | "profile";
+type Tab = "orders" | "addresses" | "profile";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "orders", label: "My Orders" },
-  { key: "wishlist", label: "Wishlist" },
   { key: "addresses", label: "Saved Addresses" },
   { key: "profile", label: "Profile Details" },
 ];
@@ -38,14 +35,14 @@ function statusClass(status: string) {
 }
 
 function AccountPage() {
-  const { user, logout, wishlist, setAuthOpen } = useStore();
+  const { user, logout, setAuthOpen } = useStore();
   const [tab, setTab] = useState<Tab>("orders");
 
   if (!user) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center text-center">
         <h1 className="font-display text-xl uppercase tracking-wider">Please sign in</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Access your orders, wishlist and addresses.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Access your orders and addresses.</p>
         <button onClick={() => setAuthOpen(true)} className="mt-6 bg-foreground px-10 py-3.5 text-[12px] font-medium uppercase tracking-[0.15em] text-background">
           Sign In
         </button>
@@ -53,9 +50,6 @@ function AccountPage() {
     );
   }
 
-  const wishItems = wishlist
-    .map((s) => getProductBySlug(s))
-    .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
     <div className="mx-auto max-w-[1280px] px-4 py-8 md:px-6">
@@ -102,18 +96,7 @@ function AccountPage() {
             </div>
           )}
 
-          {tab === "wishlist" && (
-            <div>
-              <h2 className="section-title text-sm">Wishlist</h2>
-              {wishItems.length === 0 ? (
-                <p className="mt-5 text-sm text-muted-foreground">No saved items yet.</p>
-              ) : (
-                <div className="mt-5 grid grid-cols-2 gap-x-[2px] gap-y-6 md:grid-cols-3">
-                  {wishItems.map((p) => <ProductCard key={p.slug} product={p} />)}
-                </div>
-              )}
-            </div>
-          )}
+
 
           {tab === "addresses" && (
             <div>

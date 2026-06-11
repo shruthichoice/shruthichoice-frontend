@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Heart, Search, ShoppingBag, Menu, X, User } from "lucide-react";
+import { Search, ShoppingBag, Menu, X, User } from "lucide-react";
 import { useStore } from "@/context/store";
 
 export function Logo({ light = false }: { light?: boolean }) {
@@ -27,7 +27,7 @@ const NAV_LINKS: { label: string; to: string; params?: Record<string, string> }[
 ];
 
 export function Navbar() {
-  const { cartCount, wishlist, user, setAuthOpen } = useStore();
+  const { cartCount, user, setAuthOpen } = useStore();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -91,14 +91,6 @@ export function Navbar() {
         </form>
 
         <div className="flex items-center gap-5">
-          <Link to="/wishlist" className="relative" aria-label="Wishlist">
-            <Heart className="h-5 w-5" strokeWidth={1.5} />
-            {wishlist.length > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center bg-brand px-1 text-[10px] font-medium text-brand-foreground">
-                {wishlist.length}
-              </span>
-            )}
-          </Link>
           <Link to="/cart" className="relative" aria-label="Cart">
             <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
             {cartCount > 0 && (
@@ -130,9 +122,6 @@ export function Navbar() {
         </button>
         <Logo />
         <div className="flex items-center gap-4">
-          <Link to="/wishlist" aria-label="Wishlist">
-            <Heart className="h-5 w-5" strokeWidth={1.5} />
-          </Link>
           <Link to="/cart" className="relative" aria-label="Cart">
             <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
             {cartCount > 0 && (
