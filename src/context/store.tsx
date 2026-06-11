@@ -130,7 +130,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     <StoreContext.Provider
       value={{
         cart,
-        wishlist,
         recentlyViewed,
         user,
         authOpen,
@@ -140,8 +139,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         removeFromCart,
         updateQty,
         clearCart,
-        toggleWishlist,
-        isWishlisted,
         addRecentlyViewed,
         login,
         logout,
