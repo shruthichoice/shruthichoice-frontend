@@ -27,7 +27,6 @@ export interface User {
 
 interface StoreContextValue {
   cart: CartItem[];
-  wishlist: string[];
   recentlyViewed: string[];
   user: User | null;
   authOpen: boolean;
@@ -37,8 +36,6 @@ interface StoreContextValue {
   removeFromCart: (slug: string, size: string, color: string) => void;
   updateQty: (slug: string, size: string, color: string, qty: number) => void;
   clearCart: () => void;
-  toggleWishlist: (slug: string) => void;
-  isWishlisted: (slug: string) => boolean;
   addRecentlyViewed: (slug: string) => void;
   login: (user: User) => void;
   logout: () => void;
