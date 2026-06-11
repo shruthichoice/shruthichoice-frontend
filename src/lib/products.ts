@@ -161,8 +161,13 @@ export function getProductBySlug(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
 }
 
-export const newArrivals = products.filter((p) => p.isNew || p.badge === "new");
-export const bestSellers = products.filter((p) => p.bestseller);
+// Featured rows — ordered so new/bestselling pieces lead, padded to fill grids.
+export const newArrivals = [...products].sort(
+  (a, b) => Number(b.isNew || b.badge === "new") - Number(a.isNew || a.badge === "new"),
+);
+export const bestSellers = [...products].sort(
+  (a, b) => Number(b.bestseller) - Number(a.bestseller),
+);
 export const saleProducts = products.filter((p) => p.oldPrice);
 
 export const CATEGORY_LABELS: Record<CategorySlug, string> = {
