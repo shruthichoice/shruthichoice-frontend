@@ -129,7 +129,7 @@ function Home() {
 
       <BrandTimeline />
 
-      <WhyChoose />
+      
 
       <EditorialQuote quote="Elegance Never Goes Out of Style." />
 

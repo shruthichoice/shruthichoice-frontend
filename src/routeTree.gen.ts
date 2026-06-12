@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SareesRouteImport } from './routes/sarees'
 import { Route as SaleRouteImport } from './routes/sale'
+import { Route as ProductsRouteImport } from './routes/products'
 import { Route as NewArrivalsRouteImport } from './routes/new-arrivals'
 import { Route as KurthasRouteImport } from './routes/kurthas'
 import { Route as CheckoutRouteImport } from './routes/checkout'
@@ -35,6 +36,11 @@ const SareesRoute = SareesRouteImport.update({
 const SaleRoute = SaleRouteImport.update({
   id: '/sale',
   path: '/sale',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewArrivalsRoute = NewArrivalsRouteImport.update({
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/kurthas': typeof KurthasRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/products': typeof ProductsRoute
   '/sale': typeof SaleRoute
   '/sarees': typeof SareesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/kurthas': typeof KurthasRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/products': typeof ProductsRoute
   '/sale': typeof SaleRoute
   '/sarees': typeof SareesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/kurthas': typeof KurthasRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/products': typeof ProductsRoute
   '/sale': typeof SaleRoute
   '/sarees': typeof SareesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -137,6 +146,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/kurthas'
     | '/new-arrivals'
+    | '/products'
     | '/sale'
     | '/sarees'
     | '/sitemap.xml'
@@ -151,6 +161,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/kurthas'
     | '/new-arrivals'
+    | '/products'
     | '/sale'
     | '/sarees'
     | '/sitemap.xml'
@@ -165,6 +176,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/kurthas'
     | '/new-arrivals'
+    | '/products'
     | '/sale'
     | '/sarees'
     | '/sitemap.xml'
@@ -180,6 +192,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   KurthasRoute: typeof KurthasRoute
   NewArrivalsRoute: typeof NewArrivalsRoute
+  ProductsRoute: typeof ProductsRoute
   SaleRoute: typeof SaleRoute
   SareesRoute: typeof SareesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -207,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/sale'
       fullPath: '/sale'
       preLoaderRoute: typeof SaleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/new-arrivals': {
@@ -284,6 +304,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   KurthasRoute: KurthasRoute,
   NewArrivalsRoute: NewArrivalsRoute,
+  ProductsRoute: ProductsRoute,
   SaleRoute: SaleRoute,
   SareesRoute: SareesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -292,3 +313,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

@@ -40,6 +40,7 @@
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "DM Sans", system-ui, sans-serif;
   --font-display: "Jost", system-ui, sans-serif;
+  --font-poppins: "Poppins", sans-serif;
 }
 
 :root {

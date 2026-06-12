@@ -1,17 +1,37 @@
 import { useEffect, useState } from "react";
-import hero1 from "@/assets/hero-1.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
+// Import Desktop Banners (1376x768)
+import hero1Desktop from "@/assets/hero1.png";
+import hero2Desktop from "@/assets/hero2.png";
+import hero3Desktop from "@/assets/hero3.png";
+
+// Import Mobile Banners (1080x1350)
+import hero1Mobile from "@/assets/hero1-m.png";
+import hero2Mobile from "@/assets/hero2-m.png";
+
+
+interface Slide {
+  desktopImage: string;
+  mobileImage: string;
+  alt: string;
+}
 
 /**
  * Image-only editorial hero. Banners are designed externally with their own
  * typography and marketing copy — this component only handles the crossfade,
  * autoplay, navigation dots and responsive sizing.
  */
-const slides: { image: string; alt: string }[] = [
-  { image: hero1, alt: "Shruthi's Choice — Saree campaign" },
-  { image: hero2, alt: "Shruthi's Choice — Kurtha campaign" },
-  { image: hero3, alt: "Shruthi's Choice — Festive 3-piece sets campaign" },
+const slides: Slide[] = [
+  { 
+    desktopImage: hero1Desktop, 
+    mobileImage: hero1Mobile, 
+    alt: "Shruthi's Choice — Saree campaign" 
+  },
+  { 
+    desktopImage: hero2Desktop, 
+    mobileImage: hero2Mobile, 
+    alt: "Shruthi's Choice — Kurtha campaign" 
+  },
+  
 ];
 
 export function HeroSlider() {
@@ -31,12 +51,17 @@ export function HeroSlider() {
             i === active ? "opacity-100" : "pointer-events-none opacity-0"
           }`}
         >
-          <img
-            src={slide.image}
-            alt={slide.alt}
-            className="h-full w-full object-cover"
-            loading={i === 0 ? "eager" : "lazy"}
-          />
+          <picture>
+            {/* Desktop variant loaded when screen matches Tailwind 'sm' breakpoint or higher */}
+            <source media="(min-width: 640px)" srcSet={slide.desktopImage} />
+            {/* Fallback/Mobile image loaded on smaller viewports */}
+            <img
+              src={slide.mobileImage}
+              alt={slide.alt}
+              className="h-full w-full object-cover"
+              loading={i === 0 ? "eager" : "lazy"}
+            />
+          </picture>
         </div>
       ))}
 

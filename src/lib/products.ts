@@ -1,9 +1,11 @@
-import sareeBeige from "@/assets/p-saree-beige.jpg";
-import sareeNavy from "@/assets/p-saree-navy.jpg";
-import kurthaRed from "@/assets/p-kurtha-red.jpg";
-import kurthaMustard from "@/assets/p-kurtha-mustard.jpg";
-import setGreen from "@/assets/p-set-green.jpg";
-import setMaroon from "@/assets/p-set-maroon.jpg";
+import sareeBeige from "@/assets/saree_cat.jpg";
+import sareeNavy from "@/assets/saree1.jpg";
+import  beige from "@/assets/saree2.1.jpg"
+import beige2 from "@/assets/saree2.2.jpg"
+import kurthaRed from "@/assets/kurti_cat.jpg";
+import kurthaMustard from "@/assets/kurti.jpg";
+import setGreen from "@/assets/3pc_cat.jpg";
+import setMaroon from "@/assets/3pc.jpg";
 
 export type CategorySlug = "sarees" | "kurthas" | "3-piece-sets";
 
@@ -40,14 +42,14 @@ const baseSizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
 export const products: Product[] = [
   {
-    slug: "beige-chanderi-silk-saree",
-    name: "Beige Chanderi Silk Saree",
+    slug: "Pastel Pink Saree",
+    name: "Pastel Pink Saree",
     category: "sarees",
     categoryLabel: "Sarees",
     price: 2499,
     image: sareeBeige,
     gallery: [sareeBeige, sareeNavy],
-    colors: [{ name: "Beige", hex: "#d9c39c" }, { name: "Navy", hex: "#1f2d52" }],
+    colors: [{ name: "Pink", hex: "#ffb6c1" }],
     sizes: baseSizes,
     badge: "new",
     isNew: true,
@@ -57,14 +59,14 @@ export const products: Product[] = [
     care: "Dry clean only. Store wrapped in muslin cloth away from direct sunlight.",
   },
   {
-    slug: "navy-blue-banarasi-silk-saree",
-    name: "Navy Blue Banarasi Silk Saree",
+    slug: "Beige saree",
+    name: "Beige saree",
     category: "sarees",
     categoryLabel: "Sarees",
     price: 3999,
-    image: sareeNavy,
-    gallery: [sareeNavy, sareeBeige],
-    colors: [{ name: "Navy", hex: "#1f2d52" }, { name: "Maroon", hex: "#6e1f2c" }],
+    image: beige,
+    gallery: [beige, beige2],
+    colors: [{ name: "beige", hex: "#F5F5DC" }],
     sizes: baseSizes,
     badge: "bestseller",
     bestseller: true,
@@ -74,14 +76,14 @@ export const products: Product[] = [
     care: "Dry clean only. Avoid contact with perfume and water.",
   },
   {
-    slug: "red-block-print-cotton-kurtha",
-    name: "Red Block Print Cotton Kurtha",
+    slug: "Black cotton-kurtha",
+    name: "Black Cotton Kurtha",
     category: "kurthas",
     categoryLabel: "Kurthas",
     price: 1299,
     image: kurthaRed,
     gallery: [kurthaRed, kurthaMustard],
-    colors: [{ name: "Red", hex: "#d22f48" }, { name: "Mustard", hex: "#e0a92e" }],
+    colors: [{ name: "black", hex: "#0A0A0A" }, { name: "Mustard", hex: "#e0a92e" }],
     sizes: baseSizes,
     outOfStockSizes: ["XS"],
     badge: "new",
@@ -92,15 +94,15 @@ export const products: Product[] = [
     care: "Machine wash cold. Do not bleach. Iron on medium heat.",
   },
   {
-    slug: "mustard-floral-printed-kurtha",
-    name: "Mustard Floral Printed Kurtha",
+    slug: "Blue kurtha",
+    name: "Blue Kurtha",
     category: "kurthas",
     categoryLabel: "Kurthas",
     price: 999,
     oldPrice: 1299,
     image: kurthaMustard,
-    gallery: [kurthaMustard, kurthaRed],
-    colors: [{ name: "Mustard", hex: "#e0a92e" }, { name: "Red", hex: "#d22f48" }],
+    gallery: [kurthaMustard],
+    colors: [{ name: "blue", hex: "#000080" }],
     sizes: baseSizes,
     badge: "sale",
     isNew: false,
@@ -110,14 +112,14 @@ export const products: Product[] = [
     care: "Machine wash cold. Tumble dry low. Warm iron if needed.",
   },
   {
-    slug: "green-embroidered-anarkali-set",
-    name: "Green Embroidered Anarkali Set",
+    slug: "Orange-embroidered-anarkali-set",
+    name: "Orange Embroidered Anarkali Set",
     category: "3-piece-sets",
     categoryLabel: "3-Piece Sets",
     price: 3499,
     image: setGreen,
-    gallery: [setGreen, setMaroon],
-    colors: [{ name: "Green", hex: "#8bbf4d" }, { name: "Maroon", hex: "#6e1f2c" }],
+    gallery: [setGreen],
+    colors: [{ name: "Orange", hex: "#FFA500" }],
     sizes: baseSizes,
     badge: "bestseller",
     bestseller: true,
@@ -127,15 +129,15 @@ export const products: Product[] = [
     care: "Dry clean recommended. Gentle hand wash for the inner layers.",
   },
   {
-    slug: "maroon-chiffon-3-piece-set",
-    name: "Maroon Chiffon 3-Piece Set",
+    slug: "light blue cotton-3-piece-set",
+    name: "Light blue cotton-3-piece-set",
     category: "3-piece-sets",
     categoryLabel: "3-Piece Sets",
     price: 2999,
     oldPrice: 3999,
     image: setMaroon,
-    gallery: [setMaroon, setGreen],
-    colors: [{ name: "Maroon", hex: "#6e1f2c" }, { name: "Green", hex: "#8bbf4d" }],
+    gallery: [setMaroon],
+    colors: [{ name: "light blue", hex: "#ADD8E6" }],
     sizes: baseSizes,
     outOfStockSizes: ["XXL"],
     badge: "sale",

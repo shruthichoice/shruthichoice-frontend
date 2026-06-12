@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { LayoutGrid, Grid2x2, SlidersHorizontal, ArrowUpDown, X } from "lucide-react";
+import { SlidersHorizontal, ArrowUpDown, X } from "lucide-react";
 import { ProductCard } from "./ProductCard";
 import type { Product } from "@/lib/products";
 
@@ -24,7 +24,6 @@ export function CategoryPage({
   products: Product[];
   breadcrumb: string;
 }) {
-  const [cols, setCols] = useState<2 | 4>(4);
   const [sort, setSort] = useState<SortKey>("featured");
   const [sortOpen, setSortOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -80,26 +79,8 @@ export function CategoryPage({
 
       {/* Controls bar */}
       <div className="mt-5 flex items-center justify-between border-b border-foreground pb-3">
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setCols(2)}
-            aria-label="2 columns"
-            className={`flex h-8 w-8 items-center justify-center border ${
-              cols === 2 ? "border-foreground bg-brand" : "border-border"
-            }`}
-          >
-            <Grid2x2 className="h-4 w-4" strokeWidth={1.5} />
-          </button>
-          <button
-            onClick={() => setCols(4)}
-            aria-label="4 columns"
-            className={`hidden h-8 w-8 items-center justify-center border md:flex ${
-              cols === 4 ? "border-foreground bg-brand" : "border-border"
-            }`}
-          >
-            <LayoutGrid className="h-4 w-4" strokeWidth={1.5} />
-          </button>
-          <span className="ml-3 text-[12px] text-muted-foreground">
+        <div>
+          <span className="text-[12px] text-muted-foreground">
             {filtered.length} items
           </span>
         </div>
@@ -140,17 +121,18 @@ export function CategoryPage({
         </div>
       </div>
 
-      {/* Grid */}
+      {/* Product Grid — Clean, Fixed Response Layout */}
       {filtered.length === 0 ? (
         <p className="py-24 text-center text-sm text-muted-foreground">
           No products match your filters.
         </p>
       ) : (
-        <div
-          className={`mt-4 grid gap-x-[2px] gap-y-6 ${
-            cols === 2 ? "grid-cols-2" : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-          }`}
-        >
+        /* Fixed Editorial Grid Configuration:
+          - Gutter padding added via px-4 to match earlier responsive safety rules
+          - Fixed 2-column scale on mobile viewports
+          - Staggered scaling array out to 3 cols on tablet, 4 cols on full screen desktops
+        */
+        <div className="mt-4 grid grid-cols-2 gap-x-[2px] gap-y-10 px-4 md:grid-cols-3 md:px-0 lg:grid-cols-4">
           {filtered.map((p) => (
             <ProductCard key={p.slug} product={p} />
           ))}
@@ -191,7 +173,7 @@ export function CategoryPage({
                     <button
                       key={s}
                       onClick={() => toggle(sizes, s, setSizes)}
-                      className={`h-9 w-12 border text-[13px] ${
+                      className={`h-9 w-12 border text-[13px] sharp-edges ${
                         sizes.includes(s) ? "border-foreground bg-foreground text-background" : "border-border"
                       }`}
                     >
@@ -222,7 +204,7 @@ export function CategoryPage({
             <div className="space-y-2 border-t border-border px-6 py-4">
               <button
                 onClick={() => setFilterOpen(false)}
-                className="w-full bg-foreground py-3 text-[12px] font-medium uppercase tracking-[0.15em] text-background"
+                className="w-full bg-foreground py-3 text-[12px] font-medium uppercase tracking-[0.15em] text-background sharp-edges"
               >
                 Apply Filters
               </button>
