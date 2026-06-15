@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useLocation, // ✅ Imported to track client-side location changes
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -19,6 +20,18 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { FloatingButtons } from "@/components/FloatingButtons";
 import { AuthModal } from "@/components/AuthModal";
+
+// ✅ Global Window Viewport Reset Component
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    // Snaps the window view perfectly to the top on every single route change
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function NotFoundComponent() {
   return (
@@ -140,9 +153,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <StoreProvider>
+        {/* ✅ Mounted here globally to monitor navigation routes across the entire store layout context */}
+        <ScrollToTop />
+
         <AnnouncementBar />
         <Navbar />
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <main className="min-h-[60vh]">
           <Outlet />
         </main>
