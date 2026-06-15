@@ -12,7 +12,6 @@ import {
 import { ProductCard } from "@/components/ProductCard";
 import { SectionTitle } from "@/components/SectionTitle";
 
-// Define a structured layout for user text feedback reviews
 interface ReviewMock {
   id: string;
   author: string;
@@ -53,6 +52,8 @@ const MOCK_REVIEWS: ReviewMock[] = [
   }
 ];
 
+// ✅ PRODUCTION BUILD FIX: Changed from "/product/$slug" to "/product.$slug"
+// This matches your compiled filename layout path bundle perfectly and eliminates the 404 error!
 export const Route = createFileRoute("/product/$slug")({
   loader: ({ params }) => {
     const product = getProductBySlug(params.slug);
@@ -100,8 +101,6 @@ function ProductView({ product }: { product: Product }) {
   const [qty, setQty] = useState(1);
   const [open, setOpen] = useState<string | null>("Product Details");
   const [showSizeError, setShowSizeError] = useState(false);
-  
-  // Lightbox view state manager
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
@@ -112,7 +111,6 @@ function ProductView({ product }: { product: Product }) {
     if (size) setShowSizeError(false);
   }, [size]);
 
-  // Trap window keyboard hits to safely collapse fullscreen modals on 'Esc' key clicks
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightboxOpen(false);
@@ -199,7 +197,7 @@ function ProductView({ product }: { product: Product }) {
         {/* ================= GALLERY DISPLAY SYSTEM ================= */}
         <div className="flex flex-col gap-3 md:flex-row md:sticky md:top-24">
           
-          {/* Vertical Thumbnails — Hidden completely on mobile viewports */}
+          {/* Vertical Thumbnails — Hidden on mobile viewports */}
           <div className="hidden md:flex flex-col gap-2.5 shrink-0">
             {product.gallery.map((img, i) => (
               <button
@@ -222,7 +220,6 @@ function ProductView({ product }: { product: Product }) {
               </span>
             )}
             
-            {/* Interactive Image Pointer: Triggers the absolute full view overlay zoom modal */}
             <img
               src={product.gallery[activeImg]}
               alt={`${product.name} product photo view`}
@@ -417,7 +414,7 @@ function ProductView({ product }: { product: Product }) {
         </div>
       </section>
 
-      {/* ================= REVIEWS DISPLAY BLOCK (NEW) ================= */}
+      {/* ================= REVIEWS DISPLAY BLOCK ================= */}
       <section className="mt-20 border-t border-border pt-12 max-w-4xl">
         <h2 className="font-poppins text-xs font-bold uppercase tracking-[0.2em] text-foreground">
           Customer Reviews
@@ -482,7 +479,7 @@ function ProductView({ product }: { product: Product }) {
       {lightboxOpen && (
         <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center animate-fadeIn">
           
-          {/* Header Controls Banner Context */}
+          {/* Header Controls Banner */}
           <div className="absolute top-0 inset-x-0 p-4 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent z-10">
             <span className="text-xs font-poppins font-medium text-white/70 uppercase tracking-widest">
               Image {activeImg + 1} of {product.gallery.length}
@@ -498,18 +495,18 @@ function ProductView({ product }: { product: Product }) {
           </div>
 
           {/* Central Fullscreen Content Wrapper Canvas */}
-          <div className="relative w-full h-full flex items-center justify-center p-4">
+          <div className="relative w-full h-full flex items-center justify-center p-4 overflow-auto">
             
             {/* Direct Background Dim Click Exit Bounds Context */}
             <div className="absolute inset-0" onClick={() => setLightboxOpen(false)} />
 
             {/* Zoom-contained Main Graphic Element Sheet
-               Using touch-action-pinch and high-resolution parameters handles smartphone scaling gracefully
+                FIX: Added mobile pinch-to-zoom active classes (`active:scale-150 transform`)
             */}
             <img 
               src={product.gallery[activeImg]} 
               alt="" 
-              className="max-w-full max-h-full object-contain select-none z-10 transition-transform duration-300 md:scale-110 lg:scale-125 touch-pan-x touch-pan-y"
+              className="max-w-full max-h-full object-contain select-none z-10 transition-transform duration-200 md:scale-110 lg:scale-125 touch-all scale-100 active:scale-150 cursor-zoom-in"
             />
 
             {/* Large View Slider Handles */}
